@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BCrypt.Net;
 
 namespace EjemploTabs_2021
 {
@@ -20,22 +21,23 @@ namespace EjemploTabs_2021
 
         private void botonLogin_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Form1 ventana = new Form1();
-            ventana.Show();
+            //this.Hide();
+            //Form1 ventana = new Form1();
+            //ventana.Show();
 
-            //string dni = usuario.text; //leo lo que el usuario ha escrito en las cajas
-            //string password = pass.text;
-            //if (miconexion.logininicial(dni, password))
-            //{
-            //    this.hide();
-            //    form1 ventana = new form1();
-            //    ventana.show();
+            string dni = usuario.Text; //leo lo que el usuario ha escrito en las cajas
+            string password = pass.Text;
+            if (miConexion.loginInicial(dni, password))
+            {
+                this.Hide();
+                Form1 ventana = new Form1();
+                ventana.Show();
 
-            //}
-            //else {  //o la contraseña o el usuario son incorrectos
-            //    messagebox.show("el usuario o la contraseña son incorrectos");
-            //}
+            }
+            else
+            {  //o la contraseña o el usuario son incorrectos
+                MessageBox.Show("el usuario o la contraseña son incorrectos");
+            }
         }
     }
 }

@@ -20,16 +20,19 @@ namespace EjemploTabs_2021
             try {
                 conexion.Open();
                 
-                MySqlCommand consulta = new MySqlCommand("SELECT * FROM usuario WHERE DNI=@_DNI AND password=@_password", conexion);
+                MySqlCommand consulta = new MySqlCommand("SELECT * FROM usuario WHERE DNI=@_DNI ", conexion);
                 consulta.Parameters.AddWithValue("@_DNI", _DNI);
-                consulta.Parameters.AddWithValue("@_password", _password);
 
                 MySqlDataReader resultado = consulta.ExecuteReader(); //guardo el resultado de la query
                 if (resultado.Read())
                 {
-                    conexion.Close();
-                    //si entra aquí es porque sí que estan bien el usuario y la contraseña
-                    return true;
+                    String passwordConHash = resultado.GetString("password");
+                    if (BCrypt.Net.BCrypt.Verify(_password, passwordConHash))
+                    {
+                        conexion.Close();
+                        //si entra aquí es porque sí que estan bien el usuario y la contraseña
+                        return true;
+                    }
                 }
                 conexion.Close();
                 return false;
